@@ -31,3 +31,14 @@ Now your project is initialized
 `npm install`\
 `npm run dev`
 
+**Let's Code**
+
+To make a header component\
+create a file named `Header.jsx` in `./src`\
+code for `Header.jsx` file:
+![Header.jsx Code](./images/chap1/Header.jsx%20code.png)
+
+To add this component to your app\
+import it in `App.jsx`\
+and use it as follows:
+![add Header to App.jsx](./images/chap1/add%20Header%20to%20App.jsx.png)
