@@ -1792,3 +1792,241 @@ Redux is a powerful tool for managing state in React applications, especially as
 
 <br>
 
+## Chapter 8: React Router for Navigation
+
+As your React application grows, you may need to implement navigation to manage multiple pages or views. React Router is the standard library for routing in React, allowing you to handle URL-based navigation, rendering different components based on the route.
+
+### 8.1 Introduction to React Router
+
+React Router is a collection of navigational components that compose declaratively with your application. It enables your React application to have dynamic, client-side routing, allowing for a seamless navigation experience without full page reloads.
+
+#### Installing React Router
+
+To use React Router in your project, you need to install the `react-router-dom` package.
+
+```bash
+npm install react-router-dom
+```
+
+### 8.2 Setting Up Routes
+
+The basic concept in React Router is that each route is a component that will render when the URL matches the path specified for that route.
+
+#### 8.2.1 Configuring the Router
+
+To set up routing, wrap your application with the `BrowserRouter` component.
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
+```
+
+#### 8.2.2 Defining Routes
+
+Within your `App` component, define the routes using the `Routes` and `Route` components.
+
+```javascript
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
+  );
+}
+
+export default App;
+```
+
+### 8.3 Navigating Between Routes
+
+To navigate between routes, you can use the `Link` component, which works like an anchor tag but without reloading the page.
+
+#### Example of `Link`
+
+```javascript
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+function Navbar() {
+  return (
+    <nav>
+      <ul>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/contact">Contact</Link></li>
+      </ul>
+    </nav>
+  );
+}
+
+export default Navbar;
+```
+
+### 8.4 Nested Routes
+
+React Router allows you to nest routes inside other routes. This is particularly useful for creating layouts where multiple components share common UI, like a navigation bar or footer.
+
+#### Example of Nested Routes
+
+```javascript
+import React from 'react';
+import { Routes, Route, Outlet } from 'react-router-dom';
+
+function Dashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Outlet />
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+      </Route>
+    </Routes>
+  );
+}
+
+export default App;
+```
+
+### 8.5 Programmatic Navigation
+
+You can navigate programmatically in React Router using the `useNavigate` hook. This is useful for redirects after an action like form submission.
+
+#### Example of Programmatic Navigation
+
+```javascript
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    // Perform login logic
+    navigate('/dashboard');
+  };
+
+  return (
+    <button onClick={handleLogin}>Login</button>
+  );
+}
+
+export default Login;
+```
+
+### 8.6 Route Parameters
+
+React Router allows you to define dynamic segments in your routes that can capture values from the URL and pass them as props to components.
+
+#### Example of Route Parameters
+
+```javascript
+import React from 'react';
+import { useParams } from 'react-router-dom';
+
+function UserProfile() {
+  const { userId } = useParams();
+  
+  return <h1>User ID: {userId}</h1>;
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/user/:userId" element={<UserProfile />} />
+    </Routes>
+  );
+}
+
+export default App;
+```
+
+### 8.7 Handling 404 Pages
+
+To handle routes that do not match any defined paths, you can create a "Not Found" page.
+
+#### Example of a 404 Page
+
+```javascript
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+function NotFound() {
+  return <h1>404 - Page Not Found</h1>;
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
+export default App;
+```
+
+### 8.8 Protected Routes
+
+Protected routes require authentication before they can be accessed. You can implement protected routes by creating a wrapper component that checks if the user is authenticated.
+
+#### Example of Protected Routes
+
+```javascript
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
+
+function ProtectedRoute({ isAuth, element }) {
+  return isAuth ? element : <Navigate to="/login" />;
+}
+
+function App() {
+  const isAuthenticated = false; // Replace with actual authentication logic
+
+  return (
+    <Routes>
+      <Route path="/dashboard" element={<ProtectedRoute isAuth={isAuthenticated} element={<Dashboard />} />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
+  );
+}
+
+export default App;
+```
+
+### Conclusion
+
+React Router is an essential tool for building multi-page applications with React. It allows you to define and manage routes, navigate between different parts of your application, and handle complex routing scenarios like nested routes and protected routes. Mastering React Router will enable you to create seamless navigation experiences in your React applications.
+
+In the next chapter, we will delve into **Server-Side Rendering with Next.js**, where we'll explore how to render React applications on the server for better performance and SEO.
+
+<br>
+
