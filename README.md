@@ -92,12 +92,14 @@ References:
 
 ### 1.1 Setup and Installation
 
-**Install Prerequisites**:
+#### Install Prerequisites:
 
 - Install [nodejs](https://nodejs.org/en) - JavaScript runtime environment required to run and manage React applications.
 - Install [VS Code](https://code.visualstudio.com/) - A popular code editor with extensive support for JavaScript and React.
 
-**Initialize a New React Project using Vite**: Vite is a build tool that provides a faster and leaner development experience for modern web projects.
+#### Initialize a New React Project using Vite
+
+Vite is a build tool that provides a faster and leaner development experience for modern web projects.
 
 `npm create vite@latest`
 
@@ -118,11 +120,9 @@ To run the application, navigate to your project directory and install dependenc
 
 ### 1.3 Understanding React Components
 
-**What is a React Component?**
-
 A React component is a reusable piece of code that defines how a certain part of your application should appear and behave. Components can be as simple as a button or as complex as an entire page.
 
-**Creating a Header Component**
+#### Creating a Header Component
 
 1. Create a new file named `Header.jsx` in the `./src` directory.
 
@@ -184,7 +184,7 @@ JSX stands for JavaScript XML. It allows us to write HTML inside JavaScript. It 
 
 ### 1.5 React Props and State
 
-**Props**:
+#### Props:
 
 Props are short for properties. They are read-only components that must be kept pure. Props allow you to pass data from a parent component to a child component.
 
@@ -209,7 +209,7 @@ const Header = (props) => {
 export default Header;
 ```
 
-**State**:
+#### State:
 
 State is a special object in React components that allows them to react to changes and re-render. Unlike props, state is managed within the component and can be changed asynchronously.
 
@@ -310,7 +310,7 @@ export default MyForm;
 
 React components have a lifecycle that consists of mounting, updating, and unmounting. React provides several hooks to work with the lifecycle methods of a component.
 
-**useEffect Hook**: The `useEffect` hook lets you perform side effects in function components.
+#### useEffect Hook: The `useEffect` hook lets you perform side effects in function components.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
@@ -346,7 +346,7 @@ In this chapter, we'll explore advanced component patterns in React that will he
 
 ### 2.1 Functional Components vs. Class Components
 
-**Functional Components**:
+#### Functional Components:
 
 - Functional components are simpler and are typically used for presentational purposes.
 - They are JavaScript functions that accept props as an argument and return JSX.
@@ -357,7 +357,7 @@ In this chapter, we'll explore advanced component patterns in React that will he
   }
   ```
 
-**Class Components**:
+#### Class Components:
 
 - Class components are ES6 classes that extend `React.Component` and must have a `render` method.
 - They are more powerful as they can hold state and have lifecycle methods.
@@ -370,7 +370,7 @@ In this chapter, we'll explore advanced component patterns in React that will he
   }
   ```
 
-**Key Differences**:
+#### Key Differences:
 
 - **State and Lifecycle**: Class components were traditionally used for components that manage state and have lifecycle methods. However, with the introduction of Hooks, functional components can also manage state and lifecycle, making them more powerful and preferred for new projects.
 - **Simplicity and Readability**: Functional components are more straightforward and easier to read, especially with simpler logic.
@@ -379,7 +379,7 @@ In this chapter, we'll explore advanced component patterns in React that will he
 
 A Higher-Order Component (HOC) is an advanced technique in React for reusing component logic. An HOC is a function that takes a component and returns a new component.
 
-**Example of a Higher-Order Component**:
+#### Example of a Higher-Order Component:
 
 ```jsx
 function withLogger(WrappedComponent) {
@@ -390,18 +390,18 @@ function withLogger(WrappedComponent) {
 }
 ```
 
-**Usage**:
+#### Usage:
 
 ```jsx
 const EnhancedComponent = withLogger(OriginalComponent);
 ```
 
-**When to Use HOCs**:
+#### When to Use HOCs:
 
 - When you need to share behavior across multiple components.
 - Useful for cross-cutting concerns like logging, authentication, or error handling.
 
-**Best Practices**:
+#### Best Practices:
 
 - Avoid nesting too many HOCs as it can make debugging difficult.
 - Ensure the HOC passes through all props to the wrapped component.
@@ -410,7 +410,7 @@ const EnhancedComponent = withLogger(OriginalComponent);
 
 A component with a render prop takes a function that returns a React element, which is then rendered. This pattern makes it easy to share code between components using a prop that is a function.
 
-**Example of Render Props**:
+#### Example of Render Props:
 
 ```jsx
 class MouseTracker extends React.Component {
@@ -436,7 +436,7 @@ class MouseTracker extends React.Component {
 }
 ```
 
-**Usage**:
+#### Usage:
 
 ```jsx
 <MouseTracker
@@ -448,19 +448,19 @@ class MouseTracker extends React.Component {
 />
 ```
 
-**Advantages of Render Props**:
+#### Advantages of Render Props:
 
 - Provides a flexible way to share code between components.
 - Avoids issues of props drilling and state management across multiple components.
 
-**Best Practices**:
+#### Best Practices:
 
 - Use descriptive names for render prop functions.
 - Be mindful of performance implications due to anonymous functions being re-created on every render.
 
 ### 2.4 Controlled vs. Uncontrolled Components
 
-**Controlled Components**:
+#### Controlled Components:
 
 - Form elements whose values are controlled by React state.
 - React state is the "single source of truth" for these elements.
@@ -488,7 +488,7 @@ class MouseTracker extends React.Component {
   }
   ```
 
-**Uncontrolled Components**:
+#### Uncontrolled Components:
 
 - Form elements that maintain their own internal state.
 - You access the current value through React refs.
@@ -516,19 +516,19 @@ class MouseTracker extends React.Component {
   }
   ```
 
-**When to Use Controlled vs. Uncontrolled Components**:
+#### When to Use Controlled vs. Uncontrolled Components:
 
 - **Controlled Components**: Preferred when you need to handle or manipulate form data in some way (e.g., validation, conditional logic).
 - **Uncontrolled Components**: Useful for simple scenarios where you need less overhead and don't need to manage form data extensively.
 
 ### 2.5 Composition vs. Inheritance
 
-**Composition**:
+#### Composition:
 
 - Composition is a more natural pattern in React than inheritance. Instead of creating a new component by extending another, you build components by combining other components.
 - This approach makes your code more modular and reusable.
 
-**Example of Composition**:
+#### Example of Composition:
 
 ```jsx
 function FancyBorder(props) {
@@ -545,12 +545,12 @@ function WelcomeDialog() {
 }
 ```
 
-**Inheritance**:
+#### Inheritance:
 
 - While inheritance is used in object-oriented programming to create a new class from an existing class, React recommends composition over inheritance because components are meant to be reusable and composable units.
 - Inheritance can lead to tightly coupled components, making your codebase more difficult to maintain and extend.
 
-**Best Practices**:
+#### Best Practices:
 
 - Prefer composition over inheritance to create components that are flexible and easier to maintain.
 - Use props to pass data and functions down to child components.
@@ -561,3 +561,200 @@ Understanding these advanced component patterns is crucial for building scalable
 
 In the next chapter, we will dive into **State Management in React**, exploring different techniques and libraries to manage state effectively in your applications.
 
+<br>
+
+## Chapter 3: State Management in React
+
+State management is a critical aspect of building React applications, especially as they grow in complexity. In this chapter, we will explore different techniques and libraries for managing state effectively in your React applications.
+
+### 3.1 Understanding State and Lifecycle
+
+State is a fundamental concept in React that allows you to create dynamic and interactive components. Each component can maintain its own state, and React automatically re-renders the component whenever the state changes.
+
+#### Example of Component State
+
+```jsx
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { count: 0 };
+  }
+
+  increment = () => {
+    this.setState({ count: this.state.count + 1 });
+  };
+
+  render() {
+    return (
+      <div>
+        <p>Count: {this.state.count}</p>
+        <button onClick={this.increment}>Increment</button>
+      </div>
+    );
+  }
+}
+```
+
+#### Lifecycle Methods
+
+React components have several lifecycle methods that allow you to run code at specific points in a component's lifecycle, such as when it is mounted, updated, or unmounted.
+
+- `componentDidMount()`: Called after the component is mounted.
+- `componentDidUpdate(prevProps, prevState)`: Called after the component updates.
+- `componentWillUnmount()`: Called just before the component is unmounted and destroyed.
+
+### 3.2 useState and useReducer Hooks
+
+#### useState Hook
+
+The `useState` hook is the most common way to manage state in functional components. It returns an array with two elements: the current state and a function to update it.
+
+```jsx
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+```
+
+#### useReducer Hook
+
+The `useReducer` hook is useful when you have more complex state logic that involves multiple sub-values or when the next state depends on the previous one.
+
+```jsx
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+    </div>
+  );
+}
+```
+
+### 3.3 Context API for Prop Drilling
+
+The Context API is a powerful feature in React that allows you to share state across multiple components without having to pass props down manually through every level of the component tree.
+
+#### Example of Using Context API
+
+```jsx
+import React, { createContext, useContext, useState } from 'react';
+
+const CountContext = createContext();
+
+function Counter() {
+  const count = useContext(CountContext);
+  return <h1>{count}</h1>;
+}
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <CountContext.Provider value={count}>
+      <Counter />
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </CountContext.Provider>
+  );
+}
+```
+
+#### Advantages of Context API
+
+- Simplifies the process of passing data through many levels of components.
+- Helps avoid "prop drilling" where props need to be passed through intermediate components that do not use them.
+
+### 3.4 Introduction to Redux
+
+Redux is a popular state management library for React, especially useful for larger applications where state needs to be shared across multiple components. Redux provides a centralized store where all application state is kept, and state updates are managed through actions and reducers.
+
+#### Example of a Redux Store
+
+```jsx
+import { createStore } from 'redux';
+
+function counterReducer(state = { count: 0 }, action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+const store = createStore(counterReducer);
+
+store.dispatch({ type: 'INCREMENT' });
+console.log(store.getState()); // { count: 1 }
+```
+
+#### Key Concepts in Redux
+
+- **Store:** Holds the entire state of the application.
+- **Action:** An object that describes what happened.
+- **Reducer:** A function that determines how the state changes in response to an action.
+- **Dispatch:** A function used to send actions to the store.
+
+### 3.5 React Query and Other State Management Libraries
+
+While Redux is powerful, it's not always necessary for every project. React Query and other libraries like Recoil or Zustand offer alternative approaches to state management, particularly for data fetching and local state management.
+
+#### React Query
+
+React Query simplifies data fetching, caching, synchronization, and more. It manages server state, making it easier to work with APIs in your React applications.
+
+```jsx
+import { useQuery } from 'react-query';
+
+function App() {
+  const { data, error, isLoading } = useQuery('todos', fetchTodos);
+
+  if (isLoading) return 'Loading...';
+  if (error) return 'An error occurred';
+
+  return (
+    <ul>
+      {data.map(todo => (
+        <li key={todo.id}>{todo.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+#### When to Use Redux vs. React Query
+
+- **Redux:** Best for large-scale state management where the state is shared across many components.
+- **React Query:** Ideal for managing server-side state, particularly with APIs.
+
+### Conclusion
+
+State management is a crucial aspect of building robust React applications. By understanding and using tools like `useState`, `useReducer`, the Context API, and libraries like Redux or React Query, you can manage your application's state effectively, ensuring that your app is maintainable and scalable.
+
+In the next chapter, we will dive into **React Router and Navigation**, where we will explore how to handle routing and navigation in your React applications.
