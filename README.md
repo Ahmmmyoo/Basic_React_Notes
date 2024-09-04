@@ -758,3 +758,255 @@ function App() {
 State management is a crucial aspect of building robust React applications. By understanding and using tools like `useState`, `useReducer`, the Context API, and libraries like Redux or React Query, you can manage your application's state effectively, ensuring that your app is maintainable and scalable.
 
 In the next chapter, we will dive into **React Router and Navigation**, where we will explore how to handle routing and navigation in your React applications.
+
+<br>
+
+## Chapter 4: React Router and Navigation
+
+Routing is an essential feature in any web application, allowing users to navigate between different pages or views. React Router is the standard library for handling routing in React applications. In this chapter, we will explore how to set up and use React Router to manage navigation in your app.
+
+### 4.1 Introduction to React Router
+
+React Router is a collection of navigational components that compose declaratively with your application. It helps in creating single-page applications with navigation that feels like a multi-page app.
+
+#### Installation
+
+To use React Router, you need to install it via npm:
+
+```bash
+npm install react-router-dom
+```
+
+#### Basic Setup
+
+Here’s how you can set up React Router in your React application:
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home';
+import About from './About';
+import Contact from './Contact';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+In this example:
+- `<Router>` wraps your entire application, enabling routing.
+- `<Routes>` contains all your `<Route>` elements.
+- Each `<Route>` defines a path and the component that should render when the user navigates to that path.
+
+### 4.2 Route Parameters and URL Matching
+
+React Router allows you to define dynamic routes with parameters. This is useful when you want to create routes for specific items, such as user profiles or product details.
+
+#### Example of Route Parameters
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useParams } from 'react-router-dom';
+
+function UserProfile() {
+  let { id } = useParams();
+  return <h1>User Profile for ID: {id}</h1>;
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/user/:id" element={<UserProfile />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+In this example, `:id` is a route parameter that can be accessed using the `useParams` hook within the `UserProfile` component.
+
+### 4.3 Nested Routes
+
+Nested routes allow you to render child components inside parent routes. This is useful for creating layouts that share a common structure or navigation.
+
+#### Example of Nested Routes
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
+
+function Dashboard() {
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <Outlet />
+    </div>
+  );
+}
+
+function Settings() {
+  return <h2>Settings</h2>;
+}
+
+function Profile() {
+  return <h2>Profile</h2>;
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route path="settings" element={<Settings />} />
+          <Route path="profile" element={<Profile />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+In this example, the `Outlet` component is a placeholder where the nested routes will be rendered.
+
+### 4.4 Navigation with Links
+
+React Router provides the `Link` component to enable navigation between routes without reloading the page. This is crucial for maintaining the single-page application experience.
+
+#### Example of Using Links
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+
+function Home() {
+  return <h1>Home</h1>;
+}
+
+function About() {
+  return <h1>About</h1>;
+}
+
+function App() {
+  return (
+    <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+### 4.5 Redirects and Programmatic Navigation
+
+Sometimes you may need to redirect users or navigate programmatically. React Router provides tools for both.
+
+#### Example of Redirects
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/old-path" element={<Navigate to="/new-path" />} />
+        <Route path="/new-path" element={<NewComponent />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+In this example, navigating to `/old-path` will automatically redirect the user to `/new-path`.
+
+#### Programmatic Navigation
+
+You can navigate programmatically using the `useNavigate` hook.
+
+```jsx
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function LoginPage() {
+  let navigate = useNavigate();
+
+  function handleLogin() {
+    // Perform login logic
+    navigate('/dashboard');
+  }
+
+  return <button onClick={handleLogin}>Log In</button>;
+}
+
+export default LoginPage;
+```
+
+### 4.6 Handling 404 Pages
+
+To handle undefined routes, you can use a catch-all route that renders a 404 page.
+
+#### Example of a 404 Page
+
+```jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+function NotFound() {
+  return <h1>404 - Page Not Found</h1>;
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
+```
+
+### Conclusion
+
+React Router is a powerful tool for managing navigation and routing in your React applications. By understanding and utilizing features like dynamic routes, nested routes, and programmatic navigation, you can create a smooth and intuitive user experience.
+
+In the next chapter, we will explore **Form Handling and Validation**, covering how to manage forms, handle user input, and perform validation in React.
+
+<br>
+
