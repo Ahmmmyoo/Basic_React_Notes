@@ -5,16 +5,15 @@
 
 [React Reference Page](https://react.dev/reference/react)
 
-<br>
-
 References: 
 - Video: [**React Full Course 2024**](https://www.youtube.com/watch?v=CgkZ7MvWUAA&t=5389s)
 - Channel: [**Bro Code**](https://www.youtube.com/@BroCodez)
-   
+
+<br>
+<hr>
 <br>
 
-# Table of Contents
-
+<!-- # Table of Contents
 ### Chapter 1: Introduction to React
 - [1.1 Setup and Installation](#11-setup-and-installation)
 - [1.2 Running the React Application](#12-running-the-react-application)
@@ -27,7 +26,6 @@ References:
 - [1.9 Forms in React](#19-forms-in-react)
 - [1.10 Component Lifecycle and Hooks](#110-component-lifecycle-and-hooks)
 - [1.11 Conclusion](#111-conclusion)
-
 ### Chapter 2: Advanced Component Patterns
 - [2.1 Functional Components vs. Class Components](#21-functional-components-vs-class-components)
 - [2.2 Higher-Order Components (HOCs)](#22-higher-order-components-hocs)
@@ -35,70 +33,61 @@ References:
 - [2.4 Controlled vs. Uncontrolled Components](#24-controlled-vs-uncontrolled-components)
 - [2.5 Composition vs. Inheritance](#25-composition-vs-inheritance)
 - [2.6 Conclusion](#26-conclusion)
-
 ### Chapter 3: State Management in React
 - [3.1 Understanding State and Lifecycle](#31-understanding-state-and-lifecycle)
 - [3.2 useState and useReducer Hooks](#32-usestate-and-usereducer-hooks)
 - [3.3 Context API for Prop Drilling](#33-context-api-for-prop-drilling)
 - [3.4 Introduction to Redux](#34-introduction-to-redux)
 - [3.5 React Query and Other State Management Libraries](#35-react-query-and-other-state-management-libraries)
-
 ### Chapter 4: React Router and Navigation
 - [4.1 Introduction to React Router](#41-introduction-to-react-router)
 - [4.2 Setting up Routes](#42-setting-up-routes)
 - [4.3 Nested Routes and Route Parameters](#43-nested-routes-and-route-parameters)
 - [4.4 Navigation and Redirects](#44-navigation-and-redirects)
 - [4.5 Link and NavLink Components](#45-link-and-navlink-components)
-
 ### Chapter 5: Forms and Validation in React
 - [5.1 Controlled Components and Form Handling](#51-controlled-components-and-form-handling)
 - [5.2 Validation Techniques with Libraries (Formik, Yup)](#52-validation-techniques-with-libraries-formik-yup)
 - [5.3 Custom Hooks for Forms](#53-custom-hooks-for-forms)
 - [5.4 Error Handling](#54-error-handling)
-
 ### Chapter 6: Side Effects and Data Fetching
 - [6.1 useEffect Hook in Detail](#61-useeffect-hook-in-detail)
 - [6.2 Fetching Data from APIs](#62-fetching-data-from-apis)
 - [6.3 Managing Side Effects](#63-managing-side-effects)
 - [6.4 Handling Async/Await in React](#64-handling-asyncawait-in-react)
-
 ### Chapter 7: Performance Optimization
 - [7.1 Memoization with React.memo and useMemo](#71-memoization-with-reactmemo-and-usememo)
 - [7.2 useCallback Hook](#72-usecallback-hook)
 - [7.3 React.lazy and Suspense for Code Splitting](#73-reactlazy-and-suspense-for-code-splitting)
 - [7.4 Performance Profiling and Optimization Techniques](#74-performance-profiling-and-optimization-techniques)
-
 ### Chapter 8: React and TypeScript
 - [8.1 Introduction to TypeScript with React](#81-introduction-to-typescript-with-react)
 - [8.2 Typing Props, State, and Components](#82-typing-props-state-and-components)
 - [8.3 Using TypeScript in Functional Components and Hooks](#83-using-typescript-in-functional-components-and-hooks)
 - [8.4 Advanced TypeScript Types and Generics](#84-advanced-typescript-types-and-generics)
-
 ### Chapter 9: Testing React Applications
 - [9.1 Introduction to Testing with Jest and React Testing Library](#91-introduction-to-testing-with-jest-and-react-testing-library)
 - [9.2 Unit Testing Components](#92-unit-testing-components)
 - [9.3 Integration and End-to-End Testing](#93-integration-and-end-to-end-testing)
 - [9.4 Mocking API Calls and Snapshot Testing](#94-mocking-api-calls-and-snapshot-testing)
-
 ### Chapter 10: Deploying React Applications
 - [10.1 Building for Production](#101-building-for-production)
 - [10.2 Deployment Options (Netlify, Vercel, GitHub Pages)](#102-deployment-options-netlify-vercel-github-pages)
 - [10.3 Continuous Integration/Continuous Deployment (CI/CD)](#103-continuous-integrationcontinuous-deployment-cicd)
 - [10.4 Optimizing for Performance and SEO](#104-optimizing-for-performance-and-seo)
-
 ### Chapter 11: Advanced React Concepts
 - [11.1 React Suspense and Concurrent Mode](#111-react-suspense-and-concurrent-mode)
 - [11.2 Server-Side Rendering (SSR) with Next.js](#112-server-side-rendering-ssr-with-nextjs)
 - [11.3 Static Site Generation (SSG)](#113-static-site-generation-ssg)
 - [11.4 React Fiber Architecture](#114-react-fiber-architecture)
-
 ### Chapter 12: Building Real-World Projects
 - [12.1 Integrating with Backend APIs](#121-integrating-with-backend-apis)
 - [12.2 Managing Authentication and Authorization](#122-managing-authentication-and-authorization)
 - [12.3 State Management in Large Applications](#123-state-management-in-large-applications)
-- [12.4 Best Practices and Architecture Patterns](#124-best-practices-and-architecture-patterns)
-
+- [12.4 Best Practices and Architecture Patterns](#124-best-practices-and-architecture-patterns) -->
       
+
+
 ## Chapter 1 - React Tutorial for Beginners
 
 ### 1.1 Setup and Installation
