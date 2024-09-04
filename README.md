@@ -310,7 +310,9 @@ export default MyForm;
 
 React components have a lifecycle that consists of mounting, updating, and unmounting. React provides several hooks to work with the lifecycle methods of a component.
 
-#### useEffect Hook: The `useEffect` hook lets you perform side effects in function components.
+#### useEffect Hook: 
+
+The `useEffect` hook lets you perform side effects in function components.
 
 ```jsx
 import React, { useState, useEffect } from 'react';
