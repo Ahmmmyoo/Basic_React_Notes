@@ -1788,7 +1788,9 @@ const store = createStore(rootReducer, composeWithDevTools());
 
 ### Conclusion
 
-Redux is a powerful tool for managing state in React applications, especially as they grow in complexity. By understanding core concepts like actions, reducers, and the store, and by learning how to integrate Redux with React through `react-redux`, you can maintain a predictable and scalable state management system. In the next chapter, we will explore **React Router for Navigation**, where we’ll cover how to implement routing in your React applications to handle multiple pages and views seamlessly.
+Redux is a powerful tool for managing state in React applications, especially as they grow in complexity. By understanding core concepts like actions, reducers, and the store, and by learning how to integrate Redux with React through `react-redux`, you can maintain a predictable and scalable state management system.
+
+In the next chapter, we will explore **React Router for Navigation**, where we’ll cover how to implement routing in your React applications to handle multiple pages and views seamlessly.
 
 <br>
 
