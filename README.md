@@ -2032,3 +2032,224 @@ In the next chapter, we will delve into **Server-Side Rendering with Next.js**, 
 
 <br>
 
+## Chapter 9: Server-Side Rendering with Next.js
+
+Server-Side Rendering (SSR) is a technique where your application’s pages are rendered on the server instead of the client. This approach improves performance and SEO, making your application more accessible to search engines and users with slower devices or connections. Next.js is a popular React framework that provides an easy way to implement SSR, along with other powerful features.
+
+### 9.1 Introduction to Next.js
+
+Next.js is a React framework that enables features like server-side rendering, static site generation, and API routes out of the box. It simplifies the process of building production-ready React applications with a focus on performance and scalability.
+
+#### Installing Next.js
+
+To create a new Next.js project, use the following command:
+
+```bash
+npx create-next-app@latest my-next-app
+cd my-next-app
+npm run dev
+```
+
+This sets up a Next.js project and starts the development server.
+
+### 9.2 Pages and Routing in Next.js
+
+In Next.js, the `pages` directory is used to define routes. Each file in this directory corresponds to a route in your application.
+
+#### 9.2.1 Creating Pages
+
+To create a new page, simply add a new file in the `pages` directory.
+
+```javascript
+// pages/index.js
+export default function Home() {
+  return <h1>Welcome to Next.js!</h1>;
+}
+```
+
+The above code will render when the user visits the root URL (`/`).
+
+#### 9.2.2 Dynamic Routing
+
+Next.js also supports dynamic routing with filename-based conventions. To create a dynamic route, use square brackets in the filename.
+
+```javascript
+// pages/posts/[id].js
+import { useRouter } from 'next/router';
+
+export default function Post() {
+  const router = useRouter();
+  const { id } = router.query;
+
+  return <h1>Post ID: {id}</h1>;
+}
+```
+
+This will handle routes like `/posts/1`, `/posts/2`, etc.
+
+### 9.3 Server-Side Rendering with Next.js
+
+By default, Next.js pre-renders every page. However, you can choose between different rendering methods, including SSR.
+
+#### 9.3.1 getServerSideProps
+
+To enable SSR for a specific page, use the `getServerSideProps` function. This function fetches data on each request and passes it as props to your component.
+
+```javascript
+// pages/posts/[id].js
+export async function getServerSideProps(context) {
+  const { id } = context.params;
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+  const post = await res.json();
+
+  return {
+    props: { post },
+  };
+}
+
+export default function Post({ post }) {
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
+    </div>
+  );
+}
+```
+
+### 9.4 Static Site Generation (SSG)
+
+Next.js also supports Static Site Generation (SSG), which pre-renders pages at build time, resulting in faster page loads and better scalability.
+
+#### 9.4.1 getStaticProps
+
+Use `getStaticProps` to generate static pages. This method is ideal for content that doesn’t change often.
+
+```javascript
+// pages/posts/[id].js
+export async function getStaticProps({ params }) {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${params.id}`);
+  const post = await res.json();
+
+  return {
+    props: { post },
+  };
+}
+
+export async function getStaticPaths() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+  const posts = await res.json();
+
+  const paths = posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export default function Post({ post }) {
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{post.body}</p>
+    </div>
+  );
+}
+```
+
+### 9.5 API Routes in Next.js
+
+Next.js allows you to create API routes within the `pages/api` directory. These routes are serverless functions that can handle HTTP requests.
+
+#### Example API Route
+
+```javascript
+// pages/api/hello.js
+export default function handler(req, res) {
+  res.status(200).json({ message: 'Hello, world!' });
+}
+```
+
+Access this API at `/api/hello`.
+
+### 9.6 Image Optimization with Next.js
+
+Next.js includes built-in support for image optimization, which automatically optimizes images for faster load times.
+
+#### Example of Image Optimization
+
+```javascript
+import Image from 'next/image';
+
+export default function Home() {
+  return (
+    <div>
+      <Image
+        src="/vercel.png"
+        alt="Vercel Logo"
+        width={500}
+        height={500}
+      />
+    </div>
+  );
+}
+```
+
+### 9.7 CSS and Styling in Next.js
+
+Next.js supports several methods for styling, including global styles, CSS Modules, and styled-components.
+
+#### 9.7.1 Global Styles
+
+Global styles can be applied using a CSS file in the `styles` directory and importing it in `_app.js`.
+
+```javascript
+// pages/_app.js
+import '../styles/globals.css';
+
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+
+#### 9.7.2 CSS Modules
+
+CSS Modules allow you to create scoped styles that are unique to the component.
+
+```javascript
+// components/Button.module.css
+.button {
+  background-color: blue;
+  color: white;
+}
+```
+
+```javascript
+// components/Button.js
+import styles from './Button.module.css';
+
+export default function Button() {
+  return <button className={styles.button}>Click Me</button>;
+}
+```
+
+### 9.8 Deployment of Next.js Applications
+
+Deploying a Next.js application is straightforward, especially on platforms like Vercel, which is built by the creators of Next.js.
+
+#### 9.8.1 Deploying on Vercel
+
+To deploy your application on Vercel:
+
+1. Push your project to a Git repository.
+2. Go to [Vercel](https://vercel.com) and connect your repository.
+3. Vercel will automatically build and deploy your Next.js application.
+
+### Conclusion
+
+Next.js is a powerful framework for building React applications with server-side rendering, static site generation, and other advanced features. By leveraging Next.js, you can improve the performance, scalability, and SEO of your React applications.
+
+In the next chapter, we will explore **Testing React Applications**, where we’ll cover how to write and run tests to ensure your React components work as expected.
+
+<br>
+
