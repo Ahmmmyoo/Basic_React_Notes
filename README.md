@@ -144,6 +144,7 @@ A React component is a reusable piece of code that defines how a certain part of
 2. Add the `Header` component to your main `App.jsx` file.
 
     First, import the Header component:
+
     ```jsx
     // App.jsx
     import React from 'react';
@@ -238,15 +239,15 @@ React handles events similarly to HTML, but with some syntactical differences:
 - Events are named using camelCase, e.g., `onClick` instead of `onclick`.
 - You pass a function as the event handler, not a string.
 
-  ```jsx
-  function handleClick() {
-    alert('Button clicked!');
-  }
+```jsx
+function handleClick() {
+  alert('Button clicked!');
+}
 
-  return (
-    <button onClick={handleClick}>Click me</button>
-  );
-  ```
+return (
+  <button onClick={handleClick}>Click me</button>
+);
+```
 
 ### 1.7 Conditional Rendering
 
@@ -353,24 +354,24 @@ In this chapter, we'll explore advanced component patterns in React that will he
 - Functional components are simpler and are typically used for presentational purposes.
 - They are JavaScript functions that accept props as an argument and return JSX.
 
-  ```jsx
-  function Welcome(props) {
-    return <h1>Hello, {props.name}</h1>;
-  }
-  ```
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
 
 #### Class Components:
 
 - Class components are ES6 classes that extend `React.Component` and must have a `render` method.
 - They are more powerful as they can hold state and have lifecycle methods.
 
-  ```jsx
-  class Welcome extends React.Component {
-    render() {
-      return <h1>Hello, {this.props.name}</h1>;
-    }
+```jsx
+class Welcome extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
   }
-  ```
+}
+```
 
 #### Key Differences:
 
@@ -467,56 +468,56 @@ class MouseTracker extends React.Component {
 - Form elements whose values are controlled by React state.
 - React state is the "single source of truth" for these elements.
 
-  ```jsx
-  class ControlledForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = { input: '' };
-    }
-
-    handleChange = (event) => {
-      this.setState({ input: event.target.value });
-    };
-
-    render() {
-      return (
-        <input
-          type="text"
-          value={this.state.input}
-          onChange={this.handleChange}
-        />
-      );
-    }
+```jsx
+class ControlledForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { input: '' };
   }
-  ```
+
+  handleChange = (event) => {
+    this.setState({ input: event.target.value });
+  };
+
+  render() {
+    return (
+      <input
+        type="text"
+        value={this.state.input}
+        onChange={this.handleChange}
+      />
+    );
+  }
+}
+```
 
 #### Uncontrolled Components:
 
 - Form elements that maintain their own internal state.
 - You access the current value through React refs.
 
-  ```jsx
-  class UncontrolledForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.inputRef = React.createRef();
-    }
-
-    handleSubmit = (event) => {
-      alert('A name was submitted: ' + this.inputRef.current.value);
-      event.preventDefault();
-    };
-
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" ref={this.inputRef} />
-          <button type="submit">Submit</button>
-        </form>
-      );
-    }
+```jsx
+class UncontrolledForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
   }
-  ```
+
+  handleSubmit = (event) => {
+    alert('A name was submitted: ' + this.inputRef.current.value);
+    event.preventDefault();
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <input type="text" ref={this.inputRef} />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  }
+}
+```
 
 #### When to Use Controlled vs. Uncontrolled Components:
 
