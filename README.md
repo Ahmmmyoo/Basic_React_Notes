@@ -3441,13 +3441,229 @@ const useAuth = () => useContext(AuthContext);
 ```
 In this example, `AuthProvider` provides authentication data to any components that use the `useAuth` hook.
 
----
-
 ### Conclusion
 
 Advanced React patterns such as Higher-Order Components, Render Props, Compound Components, and the Context API help in building more flexible, reusable, and maintainable components. They enable developers to solve complex problems in larger applications and manage cross-cutting concerns like state management, authentication, and UI patterns more efficiently.
 
 In the next chapter, we’ll dive into **Performance Optimization in React** to explore techniques for improving application performance.
+
+<br>
+
+## Chapter 15: React Performance Optimization
+
+As your React applications grow, performance can become a concern. In this chapter, we will explore various techniques and tools to optimize React app performance, ensuring a smooth user experience.
+
+### 15.1 Preventing Unnecessary Re-renders
+
+One of the most common performance bottlenecks in React is unnecessary re-renders. React re-renders a component whenever its state or props change, which can affect performance if not managed carefully.
+
+#### 15.1.1 Using `React.memo`
+
+`React.memo` is a higher-order component (HOC) that prevents a component from re-rendering if its props haven't changed.
+
+#### Example:
+```javascript
+const MyComponent = React.memo(({ name }) => {
+  console.log('Component rendered');
+  return <div>{name}</div>;
+});
+```
+In this example, `MyComponent` will only re-render if the `name` prop changes.
+
+#### 15.1.2 Using `useMemo`
+
+`useMemo` is a hook that memoizes the result of a computation, preventing it from being recalculated on every render unless its dependencies change.
+
+#### Example:
+```javascript
+const expensiveCalculation = (num) => {
+  // Assume this is a CPU-intensive calculation
+  return num * 2;
+};
+
+const MyComponent = ({ num }) => {
+  const result = useMemo(() => expensiveCalculation(num), [num]);
+  return <div>{result}</div>;
+};
+```
+`useMemo` ensures that the expensive calculation only runs when `num` changes.
+
+#### 15.1.3 Using `useCallback`
+
+`useCallback` is similar to `useMemo`, but it memoizes a function reference. It's particularly useful when passing functions to child components that rely on reference equality.
+
+#### Example:
+```javascript
+const MyComponent = React.memo(({ onClick }) => (
+  <button onClick={onClick}>Click me</button>
+));
+
+const Parent = () => {
+  const handleClick = useCallback(() => {
+    console.log('Button clicked');
+  }, []);
+  
+  return <MyComponent onClick={handleClick} />;
+};
+```
+Without `useCallback`, `handleClick` would be recreated on every render, causing `MyComponent` to re-render unnecessarily.
+
+### 15.2 Code Splitting
+
+Code splitting allows you to split your code into smaller bundles and load them only when needed. This can drastically reduce the initial load time of your application.
+
+#### 15.2.1 Using `React.lazy`
+
+`React.lazy` allows you to dynamically import components and only load them when needed.
+
+#### Example:
+```javascript
+const LazyComponent = React.lazy(() => import('./LazyComponent'));
+
+const App = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <LazyComponent />
+  </Suspense>
+);
+```
+`Suspense` is used to display a fallback UI while the lazy-loaded component is being fetched.
+
+#### 15.2.2 Code Splitting with React Router
+
+React Router also supports code splitting for route-based components. You can lazy-load components for specific routes.
+
+#### Example:
+```javascript
+const Home = React.lazy(() => import('./Home'));
+const About = React.lazy(() => import('./About'));
+
+const App = () => (
+  <Router>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route path="/about" component={About} />
+      </Switch>
+    </Suspense>
+  </Router>
+);
+```
+This splits the code for `Home` and `About` components, only loading them when the user navigates to the respective routes.
+
+### 15.3 Optimizing State Updates
+
+State updates can be expensive if not managed correctly. When your state becomes too complex or is deeply nested, it can lead to performance issues.
+
+#### 15.3.1 Use Local State Instead of Global State
+
+Whenever possible, keep state local to the component that needs it. Avoid using global state management (e.g., Redux) for small, isolated pieces of state.
+
+#### 15.3.2 Batch State Updates
+
+React automatically batches multiple state updates into a single re-render. However, if you’re updating state in different event handlers, you can batch them manually.
+
+#### Example:
+```javascript
+setState1((prev) => prev + 1);
+setState2((prev) => prev + 2);
+
+// Use batched updates in event handlers
+setTimeout(() => {
+  ReactDOM.unstable_batchedUpdates(() => {
+    setState1((prev) => prev + 1);
+    setState2((prev) => prev + 2);
+  });
+}, 1000);
+```
+
+### 15.4 Virtualization
+
+For large lists or tables, rendering all the items at once can slow down performance. Virtualization is a technique that only renders the visible items and dynamically loads the rest as the user scrolls.
+
+#### Example using `react-window`:
+```bash
+npm install react-window
+```
+```javascript
+import { FixedSizeList as List } from 'react-window';
+
+const Row = ({ index, style }) => (
+  <div style={style}>Row {index}</div>
+);
+
+const MyList = () => (
+  <List
+    height={150}
+    itemCount={1000}
+    itemSize={35}
+    width={300}
+  >
+    {Row}
+  </List>
+);
+```
+`react-window` helps in rendering only the visible rows of a large dataset, reducing the load on the DOM.
+
+### 15.5 Using the React Profiler
+
+The React Profiler is a tool that helps you measure how often components are rendering and identify performance bottlenecks.
+
+#### Example:
+```javascript
+<Profiler id="App" onRender={(id, phase, actualDuration) => {
+  console.log({ id, phase, actualDuration });
+}}>
+  <App />
+</Profiler>
+```
+The `onRender` callback logs information about the component, including the duration of each render cycle.
+
+### 15.6 Web Workers for Expensive Computations
+
+When performing CPU-intensive tasks (e.g., data processing, image manipulation), it’s a good idea to move the computation to a Web Worker to avoid blocking the main UI thread.
+
+#### Example:
+```javascript
+const worker = new Worker('worker.js');
+worker.postMessage(data);
+
+worker.onmessage = (event) => {
+  console.log(event.data);
+};
+```
+In this example, `worker.js` contains the logic to perform the expensive task, keeping the main thread free to handle UI updates.
+
+### 15.7 Lazy Loading Images
+
+Lazy loading images improves performance by only loading images when they are visible on the screen.
+
+#### Example:
+```javascript
+const LazyImage = ({ src, alt }) => {
+  const imgRef = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        imgRef.current.src = src;
+        observer.disconnect();
+      }
+    });
+    observer.observe(imgRef.current);
+
+    return () => observer.disconnect();
+  }, [src]);
+
+  return <img ref={imgRef} alt={alt} />;
+};
+```
+In this example, the image will only load when it becomes visible in the viewport, reducing the initial load time.
+
+### Conclusion
+
+Optimizing performance in React applications requires understanding when and where to use techniques like memoization, code splitting, and virtualization. Leveraging these strategies, along with the React Profiler and Web Workers, ensures that your applications remain fast and responsive even as they grow in complexity.
+
+In the next chapter, we’ll explore **React and TypeScript** to understand how adding static types can improve code quality and maintainability.
 
 <br>
 
