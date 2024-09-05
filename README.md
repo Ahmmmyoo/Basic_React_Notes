@@ -4077,3 +4077,326 @@ const App = () => (
 
 <br>
 
+## Chapter 21: Webpack and React
+
+Webpack is a module bundler that allows you to bundle your JavaScript applications efficiently. In this chapter, we’ll explore how to configure and optimize Webpack for React projects.
+
+### 21.1 What is Webpack?
+
+Webpack bundles your code, handling not just JavaScript, but also CSS, images, and other assets. This helps optimize your React applications for production environments.
+
+### 21.2 Setting Up Webpack in React
+
+You can either eject a Create React App (CRA) project or start from scratch with Webpack. For a new project, install Webpack:
+
+```bash
+npm install webpack webpack-cli webpack-dev-server --save-dev
+npm install babel-loader @babel/core @babel/preset-react --save-dev
+```
+
+### 21.3 Configuring Webpack
+
+Create a `webpack.config.js` file in the root of your project. Here's a basic configuration for a React app:
+
+```javascript
+const path = require('path');
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    port: 3000,
+  },
+};
+```
+
+### 21.4 Babel Configuration
+
+Babel is used to transpile modern JavaScript (ES6+) and JSX into code that browsers can understand.
+
+#### Example:
+Create a `.babelrc` file with the following:
+
+```json
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"]
+}
+```
+
+### 21.5 Hot Module Replacement
+
+Hot Module Replacement (HMR) allows you to see changes in real-time without reloading the entire application.
+
+To enable HMR, add this line to your Webpack config under `devServer`:
+
+```javascript
+hot: true
+```
+
+<br>
+
+## Chapter 22: State Management with Redux
+
+Redux is a popular state management library for React. It helps manage complex state logic and maintain predictable state across your application.
+
+### 22.1 Introduction to Redux
+
+Redux provides a global store for the application’s state, allowing different components to access and update the state without prop drilling.
+
+### 22.2 Setting Up Redux
+
+To set up Redux in a React project:
+
+```bash
+npm install redux react-redux @reduxjs/toolkit
+```
+
+### 22.3 Creating a Redux Store
+
+Using the `@reduxjs/toolkit`, you can create a Redux store in a simplified way. Here's an example:
+
+```javascript
+import { configureStore, createSlice } from '@reduxjs/toolkit';
+
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: { value: 0 },
+  reducers: {
+    increment: (state) => { state.value += 1; },
+    decrement: (state) => { state.value -= 1; },
+  },
+});
+
+export const { increment, decrement } = counterSlice.actions;
+
+const store = configureStore({ reducer: counterSlice.reducer });
+
+export default store;
+```
+
+### 22.4 Connecting Redux with React
+
+Wrap your app with the `Provider` component from `react-redux` to give access to the store.
+
+#### Example:
+```javascript
+import { Provider } from 'react-redux';
+import store from './store';
+
+const App = () => (
+  <Provider store={store}>
+    <MyComponent />
+  </Provider>
+);
+```
+
+### 22.5 Using Redux State in Components
+
+To use Redux state and dispatch actions, the `useSelector` and `useDispatch` hooks come in handy.
+
+#### Example:
+```javascript
+import { useSelector, useDispatch } from 'react-redux';
+import { increment, decrement } from './store';
+
+const Counter = () => {
+  const count = useSelector((state) => state.value);
+  const dispatch = useDispatch();
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={() => dispatch(increment())}>Increment</button>
+      <button onClick={() => dispatch(decrement())}>Decrement</button>
+    </div>
+  );
+};
+```
+
+<br>
+
+## Chapter 23: React Context API
+
+The React Context API provides a way to pass data through the component tree without having to pass props manually at every level. It’s a simpler alternative to Redux for small-to-medium-sized applications.
+
+### 23.1 Creating a Context
+
+You can create a context using `createContext`.
+
+#### Example:
+```javascript
+const ThemeContext = createContext('light');
+```
+
+### 23.2 Providing Context
+
+Wrap your application in a `Provider` component to pass down the context value.
+
+#### Example:
+```javascript
+const App = () => (
+  <ThemeContext.Provider value="dark">
+    <MyComponent />
+  </ThemeContext.Provider>
+);
+```
+
+### 23.3 Consuming Context
+
+You can consume the context using `useContext`.
+
+#### Example:
+```javascript
+import { useContext } from 'react';
+
+const ThemedComponent = () => {
+  const theme = useContext(ThemeContext);
+  return <div>Current theme: {theme}</div>;
+};
+```
+
+### 23.4 When to Use Context API
+
+- **Global Themes**: Switching between light and dark modes.
+- **User Authentication**: Storing user login status and info globally.
+- **Settings**: Sharing configuration values like language settings.
+
+<br>
+
+## Chapter 24: React Router
+
+React Router is a popular library for handling navigation in React applications. It allows you to define routes and render different components based on the URL.
+
+### 24.1 Installing React Router
+
+To install React Router:
+
+```bash
+npm install react-router-dom
+```
+
+### 24.2 Basic Routing Setup
+
+Here’s how to set up basic routes in your application:
+
+#### Example:
+```javascript
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+    </Routes>
+  </Router>
+);
+```
+
+### 24.3 Navigating Between Routes
+
+To navigate between routes, use the `Link` component:
+
+#### Example:
+```javascript
+import { Link } from 'react-router-dom';
+
+const NavBar = () => (
+  <nav>
+    <Link to="/">Home</Link>
+    <Link to="/about">About</Link>
+  </nav>
+);
+```
+
+### 24.4 Nested Routes
+
+React Router allows you to create nested routes for pages that share common layouts.
+
+#### Example:
+```javascript
+const Dashboard = () => (
+  <Routes>
+    <Route path="/" element={<DashboardHome />} />
+    <Route path="settings" element={<Settings />} />
+  </Routes>
+);
+```
+
+### 24.5 Programmatic Navigation
+
+Use `useNavigate` to navigate programmatically:
+
+#### Example:
+```javascript
+import { useNavigate } from 'react-router-dom';
+
+const Component = () => {
+  const navigate = useNavigate();
+
+  const goToHome = () => navigate('/');
+
+  return <button onClick={goToHome}>Go to Home</button>;
+};
+```
+
+<br>
+
+## Chapter 25: React and Authentication
+
+Authentication is a crucial part of most applications. In this chapter, we’ll discuss different methods of handling authentication in React, including JSON Web Tokens (JWT) and OAuth.
+
+### 25.1 Authentication with JWT
+
+JWT is a common way of handling authentication in single-page applications. After the user logs in, a token is generated and sent to the frontend, which is stored in local storage or cookies.
+
+#### Example:
+```javascript
+const login = async (credentials) => {
+  const response = await fetch('/api/login', {
+    method: 'POST',
+    body: JSON.stringify(credentials),
+    headers: { 'Content-Type': 'application/json' },
+  });
+
+  const data = await response.json();
+  localStorage.setItem('token', data.token);
+};
+```
+
+### 25.2 Protecting Routes
+
+To protect certain routes, you can create a `PrivateRoute` component that checks if the user is authenticated before rendering the component.
+
+#### Example:
+```javascript
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/login" />;
+};
+
+const App = () => (
+  <Routes>
+    <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+  </Routes>
+);
+```
+
+<br>
