@@ -3246,3 +3246,208 @@ In the next chapter, we will explore **Advanced React Patterns**, where we’ll 
 
 <br>
 
+## Chapter 14: Advanced React Patterns
+
+In this chapter, we’ll explore some advanced React patterns that allow you to create more reusable, flexible, and maintainable components. These patterns help solve common problems in large-scale applications.
+
+### 14.1 Higher-Order Components (HOCs)
+
+Higher-Order Components (HOCs) are a pattern where a function takes a component and returns a new enhanced component. HOCs are useful for reusing component logic across multiple components without repeating code.
+
+#### Example:
+```javascript
+function withAuth(WrappedComponent) {
+  return function AuthenticatedComponent(props) {
+    const isAuthenticated = /* logic to check authentication */;
+    if (!isAuthenticated) {
+      return <Redirect to="/login" />;
+    }
+    return <WrappedComponent {...props} />;
+  };
+}
+```
+In this example, `withAuth` is a Higher-Order Component that adds authentication logic to any wrapped component.
+
+### 14.2 Render Props
+
+Render Props is a pattern where a component’s prop is a function, and the component uses that function to determine what to render. This allows for more dynamic component rendering and is a way to share code between components.
+
+#### Example:
+```javascript
+class MouseTracker extends React.Component {
+  state = { x: 0, y: 0 };
+
+  handleMouseMove = (event) => {
+    this.setState({ x: event.clientX, y: event.clientY });
+  };
+
+  render() {
+    return (
+      <div onMouseMove={this.handleMouseMove}>
+        {this.props.render(this.state)}
+      </div>
+    );
+  }
+}
+
+<MouseTracker render={({ x, y }) => (
+  <p>The mouse position is {x}, {y}</p>
+)} />
+```
+In this pattern, the `MouseTracker` component exposes the mouse coordinates via a render prop function.
+
+### 14.3 Compound Components
+
+Compound Components are a pattern where multiple components work together to form a cohesive component. These components are designed to be used together and communicate internally without passing data through props explicitly.
+
+#### Example:
+```javascript
+const Toggle = ({ children }) => {
+  const [on, setOn] = useState(false);
+  const toggle = () => setOn(!on);
+
+  return (
+    <ToggleContext.Provider value={{ on, toggle }}>
+      {children}
+    </ToggleContext.Provider>
+  );
+};
+
+const ToggleButton = () => {
+  const { on, toggle } = useContext(ToggleContext);
+  return <button onClick={toggle}>{on ? 'On' : 'Off'}</button>;
+};
+
+const ToggleMessage = () => {
+  const { on } = useContext(ToggleContext);
+  return on ? <p>The toggle is ON</p> : <p>The toggle is OFF</p>;
+};
+
+<Toggle>
+  <ToggleButton />
+  <ToggleMessage />
+</Toggle>
+```
+Here, `ToggleButton` and `ToggleMessage` are compound components that interact through shared context, managed by the `Toggle` component.
+
+### 14.4 Context API
+
+The Context API is useful for avoiding prop drilling (passing props down multiple levels) by providing a way to share data between components without explicitly passing props. Context is ideal for managing global data such as user authentication or theme settings.
+
+#### Example:
+```javascript
+const ThemeContext = React.createContext();
+
+const App = () => {
+  const [theme, setTheme] = useState('light');
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <Header />
+      <Content />
+    </ThemeContext.Provider>
+  );
+};
+
+const Header = () => {
+  const { theme } = useContext(ThemeContext);
+  return <header className={theme}>Header</header>;
+};
+```
+In this example, `ThemeContext` provides the current theme and the ability to update it, making it available throughout the component tree without prop drilling.
+
+### 14.5 Custom Hooks
+
+Custom Hooks allow you to extract logic that’s shared across multiple components into reusable functions. They follow the same rules as built-in hooks and can help reduce duplication of logic in functional components.
+
+#### Example:
+```javascript
+function useWindowWidth() {
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return width;
+}
+
+const Component = () => {
+  const width = useWindowWidth();
+  return <p>Window width is {width}px</p>;
+};
+```
+In this example, `useWindowWidth` is a custom hook that encapsulates logic for getting the window width and updates it whenever the window is resized.
+
+### 14.6 Controlled and Uncontrolled Components
+
+Controlled components are those where form data is handled by React state, whereas uncontrolled components rely on the DOM to handle form data.
+
+#### Controlled Component Example:
+```javascript
+const ControlledInput = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+};
+```
+
+#### Uncontrolled Component Example:
+```javascript
+const UncontrolledInput = () => {
+  const inputRef = useRef();
+
+  const handleSubmit = () => {
+    alert(inputRef.current.value);
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  );
+};
+```
+Controlled components give more control over form data but can be verbose. Uncontrolled components are simpler but offer less control.
+
+### 14.7 Provider Pattern
+
+The Provider Pattern is used to inject dependencies into components without passing them directly as props. This pattern is often implemented using React’s Context API.
+
+#### Example:
+```javascript
+const AuthContext = React.createContext();
+
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+const useAuth = () => useContext(AuthContext);
+```
+In this example, `AuthProvider` provides authentication data to any components that use the `useAuth` hook.
+
+---
+
+### Conclusion
+
+Advanced React patterns such as Higher-Order Components, Render Props, Compound Components, and the Context API help in building more flexible, reusable, and maintainable components. They enable developers to solve complex problems in larger applications and manage cross-cutting concerns like state management, authentication, and UI patterns more efficiently.
+
+In the next chapter, we’ll dive into **Performance Optimization in React** to explore techniques for improving application performance.
+
+<br>
+
